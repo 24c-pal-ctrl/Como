@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como - Discover Italy</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --red: #b23a48;
+      --green: #2e5339;
+      --green-light: #d8f3dc;
+      --cream: #fefcfb;
+      --card-bg: #fff5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #ffffffee;
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 24px;
+      z-index: 1000;
+      border-bottom: 1px solid #e8dede;
+    }
+
+    .nav-left {
+      position: absolute;
+      left: 24px;
+    }
+
+    .nav-center {
+      text-align: center;
+    }
+
+    .nav-center h1 {
+      margin: 0 0 4px;
+      color: var(--red);
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--red);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .nav-links a:hover {
+      background: #fbe8ea;
+    }
+
+    /* ── LANGUAGE SWITCHER ── */
+    .nav-right {
+      position: absolute;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      cursor: pointer;
+      padding: 5px 11px;
+      border-radius: 20px;
+      background: transparent;
+      border: 2px solid #ddd;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .lang-btn.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    /* ── SPACER ── */
+    .spacer {
+      height: 120px;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(178, 58, 72, 0.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-content h3 {
+      margin: 8px 0 6px;
+      color: var(--red);
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+    }
+
+    .card-content p {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 15px;
+    }
+
+    .card-content button {
+      background: var(--green-light);
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .card-content button:hover {
+      background: #b7e4c7;
+    }
+
+    /* ── SUBPAGES ── */
+    .page {
+      display: none;
+      padding: 40px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .page img {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 18px;
+      border-radius: 10px;
+    }
+
+    .back-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      color: var(--red);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .back-arrow:hover {
+      background: #fbe8ea;
+    }
+
+    h1,
+    h2 {
+      color: var(--red);
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ── FOOTER MAP ── */
+    footer {
+      margin-top: 40px;
+    }
+
+    iframe {
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-left">
+      <div class="container">
+        <img src="Como-Stemma.svg.png" width="100" alt="Logó">
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <h1>Como</h1>
+      <div class="nav-links">
+        <a href="#" onclick="showPage('home')" data-key="nav_home">Home</a>
+        <a href="#" onclick="showPage('lake')" data-key="nav_lake">Lake</a>
+        <a href="#" onclick="showPage('city')" data-key="nav_city">City</a>
+        <a href="#" onclick="showPage('villas')" data-key="nav_villas">Villas</a>
+        <a href="#" onclick="showPage('football')" data-key="nav_football">Football</a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-it" onclick="setLang('it')">IT</button>
+      <button class="lang-btn" id="btn-hu" onclick="setLang('hu')">HU</button>
+    </div>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <!-- HOME -->
+  <div id="home" class="page active">
+    <h1 data-key="home_title">Welcome to Como</h1>
+    <div class="cards">
+
+      <div class="card">
+        <img src="Sentiero_del_Viandante_DSC_6340_(14020554463).jpg" alt="Lake Como">
+        <div class="card-content">
+          <h3 data-key="card_lake_title">Lake Como</h3>
+          <p data-key="card_lake_desc">One of the most beautiful lakes in Europe.</p>
+          <button onclick="showPage('lake')" data-key="btn_read_more">Read more</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="Jean-Baptiste-Camille_Corot_-_Como_and_Lake_Como.jpg" alt="History">
+        <div class="card-content">
+          <h3 data-key="card_history_title">The city </h3>
+          <p data-key="card_history_desc">Explore the historic heart of Como.</p>
+          <button onclick="showPage('city')" data-key="btn_read_more">Read more</button>
+        </div>
+      </div>
+
+
+
+      <div class="card">
+        <img src="villa.avif" alt="Villas">
+        <div class="card-content">
+          <h3 data-key="card_villas_title">Villas</h3>
+          <p data-key="card_villas_desc">Famous villas along the lake.</p>
+          <button onclick="showPage('villas')" data-key="btn_read_more">Read more</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="images.jpg" alt="Como Football">
+        <div class="card-content">
+          <h3 data-key="card_football_title">Football Club</h3>
+          <p data-key="card_football_desc">Discover Como's football team and history.</p>
+          <button onclick="showPage('football')" data-key="btn_read_more">Read more</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LAKE -->
+  <div id="lake" class="page">
+    <span class="back-arrow" onclick="showPage('home')">&#8592; <span data-key="btn_back">Back</span></span>
+    <h2 data-key="lake_title">Lake Como</h2>
+    <p data-key="lake_text">A Comói-tó (olaszul Lago di Como vagy Lario) egy gleccsereredetű állóvíz
+      Észak-Olaszországban, Lombardia régióban. 146
+      -es területével Olaszország harmadik legnagyobb tava, több mint 400 méteres mélysége pedig Európa egyik legmélyebb
+      tavává teszi. Jellegzetes, fordított „Y” alakját a jégkorszaki Adda-gleccser mozgása alakította ki.
+      A tó partján számos festői város és pazar villa található, mint például a Villa Olmo, a Villa Serbelloni és a
+      Villa Carlotta, amelyek történelmi építészetükről és botanikus kertjeikről híresek. A térség enyhe, párás klímája
+      kedvez a szubtrópusi növényzetnek és a mediterrán kultúráknak, például az olajbogyónak.
+      Történelmi és gazdasági jelentősége:
+      Múlt: Már a római idők óta népszerű üdülőhely az arisztokrácia körében; Julius Caesar i.e. 59-ben alapította újra
+      Como városát Novum Comum néven. A 19. és 20. században világhírűvé vált selyemipara révén.
+      Jelen: Gazdasága ma leginkább a turizmusra épül, de jelentős a gépgyártás és a kézművesség is.
+      Kultúra: Számos művészt (pl. Liszt Ferencet, Verdit) és írót (pl. Manzonit, Mark Twaint) inspirált, emellett olyan
+      nagyszabású filmek helyszíneként is szolgált, mint a Star Wars vagy a Casino Royale.
+      A tó népszerűsége ugyanakkor komoly kihívásokat is jelent: a tömegturizmus (overtourism) megterheli a helyi
+      infrastruktúrát és hatással van az ingatlanárakra is. </p>
+    <img src="Lake Como, Italy_AdobeStock_134710501.jpeg" alt="Lake Como">
+  </div>
+
+  <!-- CITY -->
+  <div id="city" class="page">
+    <span class="back-arrow" onclick="showPage('home')">&#8592; <span data-key="btn_back">Back</span></span>
+    <h2 data-key="city_title">City & History</h2>
+    <p data-key="city_text">Általános bemutatás
+      Como Észak-Olaszországban, Lombardia régióban található, a Comói-tó délnyugati ágának végén fekszik, Milánótól
+      mintegy 45 km-re északra. Como megye székhelye és a tóvidék legnagyobb városa.
+      Története
+      Ókor: Már a kelták idején jelentős volt, a rómaiak i. e. 195-ben foglalták el. Julius Caesar és Augustus korában
+      Novum Comum néven ismerték.
+      Középkor: A 12. században háborúskodott Milánóval, ami a város lerombolásához vezetett, majd Barbarossa Frigyes
+      építtette újjá. Később a Visconti és a Sforza családok birtoka volt.
+      Újkor: Spanyol, francia és osztrák fennhatóság alatt is állt. A selyemszövés Mária Terézia idején indult meg.
+      1861-ben vált az egyesült Olasz Királyság részévé.
+      II. világháború: 1945-ben a közelben tartóztatták le a menekülő Benito Mussolinit.
+      Főbb látnivalók
+      Duomo (Székesegyház): Észak-Olaszország egyik legjelentősebb műemléke, építése 1396-ban kezdődött, stílusa a
+      gótikától a barokkig terjed.
+      Tempio Voltiano: Alessandro Volta fizikus tiszteletére emelt klasszicista épület, ahol találmányait (pl. az első
+      galvánelemet) őrzik.
+      Villa Olmo: 18. századi palota gyönyörű parkkal és kilátással a tóra.
+      Broletto: A 13. században épült korábbi városháza, jellegzetes márvány homlokzattal.
+      Éghajlat és Demográfia
+      A város éghajlata mérsékelt, az évi átlaghőmérséklet 13°C körül alakul, a legmelegebb hónap a július (átlag max.
+      29°C). Lakossága 2023-as adatok szerint kb. 83 184 fő.</p>
+    <img src="como_alto.jpg" alt="Como City">
+  </div>
+
+  <!-- VILLAS -->
+  <div id="villas" class="page">
+    <span class="back-arrow" onclick="showPage('home')">&#8592; <span data-key="btn_back">Back</span></span>
+    <h2 data-key="villas_title">Villas</h2>
+    <p data-key="villas_text">A Comói-tó környéke (Olaszország) híres luxusvilláiról, amelyek lenyűgöző tóparti
+      panorámát, történelmi kerteket és magas szintű kényelmet kínálnak. A legnépszerűbbek közé tartozik a Villa del
+      Balbianello (Lenno) és a Villa Olmo (Como), míg a szállások között a Booking.com és Airbnb kínálatában számos
+      medencés, panorámás villa található.
+      Népszerű Villák és Területek a Comói-tónál:
+      Villa del Balbianello (Lenno): A tó egyik legszebb, kertjeiről és filmforgatásairól híres villája.
+      Villa Olmo (Como): Nagy zöld parkkal rendelkező, a 18. század végén épült neoklasszicista villa.
+      Villa Carlotta (Tremezzo): Botanikus kertjéről és műtárgyairól ismert helyszín.
+      Villa Wirnica & The Greenhouse Luxury Villa on Lake Como: Magasra értékelt modern szállások, írja a Booking.com.
+      Villa Mara - By Myhomeincomo: A városközponthoz közel, a Volta-templomtól 3 km-re található.</p>
+    <img src="cima2.jpg" alt="Villas">
+  </div>
+
+  <!-- FOOTBALL -->
+  <div id="football" class="page">
+    <span class="back-arrow" onclick="showPage('home')">&#8592; <span data-key="btn_back">Back</span></span>
+    <h2 data-key="football_title">Como Football Club</h2>
+    <p data-key="football_text">A Como 1907 (korábban Calcio Como) egy nagy múltú olasz labdarúgócsapat az
+      észak-olaszországi Comóból. A klubot eredetileg 1907-ben alapították, de története során pénzügyi okokból kétszer
+      is (2005-ben és 2017-ben) újjá kellett alapítani.
+      Történet és eredmények
+      A csapat hullámzó teljesítményt nyújtott az évtizedek alatt, többször megjárva az olasz bajnokság minden szintjét:
+      Aranykor és Serie A: Először 1949-ben jutottak fel az élvonalba, ahol négy évet töltöttek. Később az 1980-as
+      években stabilizálták helyüket a Serie A-ban, 1984-től öt egymást követő szezonon át szerepeltek a legmagasabb
+      osztályban.
+      Válság és csőd: A 2000-es évek elején súlyos pénzügyi gondok miatt a klub csődbe ment, és a 2005-06-os idényt a
+      negyedosztályban (Serie D) kellett újrakezdeniük. Hasonló válság sújtotta őket 2017-ben is, amikor szintén a Serie
+      D-be sorolták vissza őket.
+      Újkori felemelkedés: A legutóbbi években a klub látványos fejlődésen ment keresztül, aminek eredményeként a
+      2024-25-ös szezonban ismét az élvonal (Serie A) tagja lett.
+      Fontos adatok
+      Stadion: Giuseppe Sinigaglia Stadion (13 602 fő befogadására alkalmas).
+      Híres játékosok: Megfordult itt többek között Pietro Vierchowod, Gianluca Zambrotta, Marco Tardelli és a Chelsea
+      korábbi kapusa, Carlo Cudicini is.
+      Érdekesség: Rövid ideig a klub tulajdonosa Akosua Puni Essien (Michael Essien felesége) volt, aki az első női
+      klubtulajdonos lett az olasz futballban. </p>
+    <img
+      src="como-1907-for-team-photo-lined-up-during-udinese-calcio-vs-como-1907-italian-soccer-serie-a-match-in-udine-italy-september-01-2024-2Y09EWW.jpg"
+      alt="Como FC">
+  </div>
+
+  <!-- FOOTER MAP -->
+  <footer>
+    <iframe src="https://maps.google.com/maps?q=Como%20Italy&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%"
+      height="300">
+    </iframe>
+  </footer>
+
+  <script>
+    // Default language on load
+    window.onload = () => {
+      setLang('en');
+    };
+    // ── TRANSLATIONS ──────────────────────────────────────────────
+   const T = {
+  en: {
+    nav_home: "Home",
+    nav_lake: "Lake",
+    nav_city: "City",
+    nav_villas: "Villas",
+    nav_football: "Football",
+    home_title: "Welcome to Como",
+    btn_back: "Back",
+    btn_read_more: "Read more",
+    card_lake_title: "Lake Como",
+    card_lake_desc: "One of the most beautiful lakes in Europe.",
+    card_history_title: "History",
+    card_history_desc: "Explore the historic heart of Como.",
+    card_city_title: "City",
+    card_city_desc: "Discover the vibrant streets of Como.",
+    card_villas_title: "Villas",
+    card_villas_desc: "Famous villas along the lake.",
+    card_football_title: "Football Club",
+    card_football_desc: "Discover Como's football team and history.",
+    lake_title: "Lake Como",
+    lake_text: "Lake Como (Italian: Lago di Como or Lario) is a glacial lake located in Northern Italy, in the Lombardy region. With an area of 146 km², it is the third-largest lake in Italy, and with a depth exceeding 400 meters, it is one of the deepest lakes in Europe. Its characteristic inverted “Y” shape was formed by the movement of the Adda glacier during the Ice Age. The shores of the lake are home to numerous picturesque towns and magnificent villas, such as Villa Olmo, Villa Serbelloni, and Villa Carlotta, which are famous for their historical architecture and botanical gardens. The region’s mild and humid climate favors subtropical vegetation and Mediterranean crops such as olives.",
+    city_title: "City & History",
+    city_text: "Como is located in Northern Italy, at the southwestern end of Lake Como. Significant since Celtic times, the Romans conquered it in 195 BC, and under Julius Caesar, it was known as Novum Comum. In the 12th century, Frederick Barbarossa rebuilt it after wars with Milan. Silk weaving developed during the reign of Maria Theresa, making it world-famous. Key attractions include the Duomo (Cathedral), a monument ranging from Gothic to Baroque styles; the Tempio Voltiano, dedicated to Alessandro Volta; and the 13th-century Broletto. In 1945, Benito Mussolini was captured nearby while fleeing.",
+    villas_title: "Villas",
+    villas_text: "The Lake Como region is famous for its luxury villas, offering stunning lakeside views and historic gardens. Popular sites include Villa del Balbianello in Lenno, famous for film shoots (Star Wars, Casino Royale); Villa Olmo in Como, a neoclassical palace with a large park; and Villa Carlotta in Tremezzo, known for its botanical gardens. Many of these villas now serve as museums or high-end accommodations.",
+    football_title: "Como 1907 Football Club",
+    football_text: "Como 1907 is a historic club founded in 1907. It stabilized in Serie A during the 1980s but faced bankruptcy twice in the 2000s. After restarting from the lower leagues, the club saw a significant rise and returned to Serie A for the 2024–25 season. They play at the Stadio Giuseppe Sinigaglia, which has a capacity of 13,602. Notable former players include Gianluca Zambrotta and Marco Tardelli.",
+    ai_title: "AI Assistant",
+    ai_hello: "Hello! Ask me about Como.",
+    ai_placeholder: "Type a question...",
+    ai_btn: "Ask",
+    ai_football: "Como 1907 is the city's football team, recently promoted back to Serie A.",
+    ai_lake: "Lake Como is a glacial lake known for its 'Y' shape and deep blue waters.",
+    ai_city: "The city of Como is famous for its silk history and its beautiful Gothic cathedral.",
+    ai_villas: "Famous villas include Villa del Balbianello, Villa Olmo, and Villa Carlotta.",
+    ai_default: "I can help you learn about Como! Ask me about the Lake, City, Villas, or Football."
+  },
+  it: {
+    nav_home: "Home",
+    nav_lake: "Lago",
+    nav_city: "Città",
+    nav_villas: "Ville",
+    nav_football: "Calcio",
+    home_title: "Benvenuti a Como",
+    btn_back: "Indietro",
+    btn_read_more: "Scopri di più",
+    card_lake_title: "Lago di Como",
+    card_lake_desc: "Uno dei laghi più belli d'Europa.",
+    card_history_title: "Storia",
+    card_history_desc: "Esplora il cuore storico di Como.",
+    card_city_title: "Città",
+    card_city_desc: "Scopri le vivaci strade di Como.",
+    card_villas_title: "Ville",
+    card_villas_desc: "Ville famose lungo il lago.",
+    card_football_title: "Squadra di Calcio",
+    card_football_desc: "Scopri la squadra di calcio di Como e la sua storia.",
+    lake_title: "Lago di Como",
+    lake_text: "Il Lago di Como (detto anche Lario) è un lago di origine glaciale situato in Lombardia. Con una superficie di 146 km² è il terzo lago più grande d'Italia e uno dei più profondi d'Europa (oltre 400 metri). La sua caratteristica forma a “Y” rovesciata è stata modellata dal ghiacciaio dell'Adda. Le rive ospitano ville splendide come Villa Olmo e Villa Carlotta, famose per l'architettura e i giardini botanici. Il clima mite favorisce colture mediterranee come l'olivo.",
+    city_title: "Città e Storia",
+    city_text: "Como si trova all'estremità sud-occidentale del lago. Già importante in epoca celtica, fu rifondata da Giulio Cesare nel 59 a.C. come Novum Comum. Nel XII secolo fu ricostruita da Federico Barbarossa. Celebre per l'industria della seta sviluppatasi sotto Maria Teresa, la città vanta monumenti come il Duomo (dal gotico al barocco), il Tempio Voltiano dedicato ad Alessandro Volta e il Broletto del XIII secolo.",
+    villas_title: "Ville",
+    villas_text: "La zona è celebre per le sue ville di lusso. Tra le più note: Villa del Balbianello (Lenno), famosa per set cinematografici; Villa Olmo (Como), palazzo neoclassico con un grande parco; e Villa Carlotta (Tremezzo), nota per le collezioni d'arte e il giardino botanico. Molte ville offrono oggi ospitalità di alto livello o sono musei aperti al pubblico.",
+    football_title: "Como 1907",
+    football_text: "Il Como 1907 è una storica squadra fondata nel 1907. Dopo aver vissuto anni d'oro in Serie A negli anni '80 e affrontato fallimenti nei primi anni 2000, il club è rinato tornando in Serie A nella stagione 2024-25. Gioca allo Stadio Giuseppe Sinigaglia (13.602 posti). Tra i suoi campioni storici figurano Pietro Vierchowod e Gianluca Zambrotta.",
+    ai_title: "Assistente AI",
+    ai_hello: "Ciao! Chiedimi di Como.",
+    ai_placeholder: "Scrivi una domanda...",
+    ai_btn: "Chiedi",
+    ai_football: "Il Como 1907 è la squadra della città, recentemente tornata in Serie A.",
+    ai_lake: "Il Lago di Como è celebre per la sua forma a Y e i suoi borghi pittoreschi.",
+    ai_city: "Como è famosa per la sua cattedrale e la lunga tradizione della seta.",
+    ai_villas: "Le ville più famose sono Villa del Balbianello, Villa Olmo e Villa Carlotta.",
+    ai_default: "Posso aiutarti a conoscere Como! Chiedimi del Lago, della Città, delle Ville o del Calcio."
+  },
+  hu: {
+    nav_home: "Főoldal",
+    nav_lake: "Tó",
+    nav_city: "Város",
+    nav_villas: "Villák",
+    nav_football: "Futball",
+    home_title: "Üdvözlünk Comóban",
+    btn_back: "Vissza",
+    btn_read_more: "Tovább",
+    card_lake_title: "Comói-tó",
+    card_lake_desc: "Európa egyik legszebb tava.",
+    card_history_title: "Történelem",
+    card_history_desc: "Fedezd fel Como történelmi szívét.",
+    card_city_title: "Város",
+    card_city_desc: "Ismerd meg Como nyüzsgő utcáit.",
+    card_villas_title: "Villák",
+    card_villas_desc: "Hírneves villák a tó partján.",
+    card_football_title: "Futballklub",
+    card_football_desc: "Fedezd fel Como futballcsapatát és történetét.",
+    lake_title: "Comói-tó",
+    lake_text: "A Comói-tó (olaszul Lago di Como vagy Lario) egy gleccsereredetű állóvíz Észak-Olaszországban, Lombardia régióban. 146 km²-es területével Olaszország harmadik legnagyobb tava, több mint 400 méteres mélysége pedig Európa egyik legmélyebb tavává teszi. Jellegzetes, fordított „Y” alakját a jégkorszaki Adda-gleccser mozgása alakította ki. A tó partján számos festői város és pazar villa található, mint például a Villa Olmo, a Villa Serbelloni és a Villa Carlotta, amelyek történelmi építészetükről és botanikus kertjeikről híresek. A térség enyhe klímája kedvez a mediterrán kultúráknak, például az olajbogyónak.",
+    city_title: "Város és Történelem",
+    city_text: "Como a tó délnyugati ágának végén fekszik, Milánótól 45 km-re. Már a kelták idején jelentős volt, a rómaiak i. e. 195-ben foglalták el, Julius Caesar pedig Novum Comum néven alapította újra. Főbb látnivalói a Duomo (Székesegyház), a gótikától a barokkig terjedő stílusával; a Tempio Voltiano, Alessandro Volta emlékhelye; és a 13. századi Broletto. A selyemszövés Mária Terézia idején indult meg, világhírnevet hozva a városnak. 1945-ben a közelben tartóztatták le a menekülő Benito Mussolinit.",
+    villas_title: "Villák",
+    villas_text: "A Comói-tó környéke híres luxusvilláiról, amelyek lenyűgöző panorámát és történelmi kerteket kínálnak. A legnépszerűbbek közé tartozik a Villa del Balbianello (Lenno), amely híres filmforgatások (Star Wars, Casino Royale) helyszíne volt; a Villa Olmo (Como), egy neoklasszicista palota hatalmas parkkal; és a Villa Carlotta (Tremezzo), amely botanikus kertjéről ismert. A térségben számos modern luxusszállás is várja a látogatókat.",
+    football_title: "Como 1907 Futballklub",
+    football_text: "A Como 1907 egy nagy múltú olasz csapat. Az 1980-as években stabil Serie A tag volt, de a 2000-es években kétszer is csődbe ment. Az újkori felemelkedés eredményeként a 2024-25-ös szezonban ismét visszatértek az élvonalba. Stadionjuk a Giuseppe Sinigaglia (13 602 fő). Híres játékosaik között szerepel Gianluca Zambrotta és Marco Tardelli. Érdekesség, hogy Michael Essien felesége volt az első női tulajdonos az olasz futballban a klubnál.",
+    ai_title: "AI Asszisztens",
+    ai_hello: "Szia! Kérdezz Comóról!",
+    ai_placeholder: "Írj egy kérdést...",
+    ai_btn: "Kérdezz",
+    ai_football: "A Como 1907 a város labdarúgócsapata, amely jelenleg az olasz Serie A-ban játszik.",
+    ai_lake: "A Comói-tó egy gleccsereredetű tó, híres a fordított Y alakjáról és a mélységéről.",
+    ai_city: "Como városa híres a selyemiparáról és a gyönyörű gótikus katedrálisáról.",
+    ai_villas: "A leghíresebb villák a Villa del Balbianello, a Villa Olmo és a Villa Carlotta.",
+    ai_default: "Segíthetek megismerni Comót! Kérdezz a Tóról, a Városról, a Villákról vagy a Futballról."
+  }
+};
+
+    let currentLang = 'en';
+
+    // ── APPLY LANGUAGE ─────────────────────────────────────────────
+    function setLang(lang) {
+      currentLang = lang;
+      const t = T[lang];
+
+      // Update all elements with data-key
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+
+      // Update input placeholders with data-key-placeholder
+      document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-key-placeholder');
+        if (t[key] !== undefined) el.placeholder = t[key];
+      });
+
+      // Highlight active button
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn-' + lang).classList.add('active');
+    }
+
+    // ── PAGE NAVIGATION ────────────────────────────────────────────
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+  </script>
+</body>
+
+</html>
